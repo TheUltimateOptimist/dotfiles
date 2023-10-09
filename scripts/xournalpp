@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+xournalpp "$1" &
+sleep 0.5
+i3 fullscreen toggle
