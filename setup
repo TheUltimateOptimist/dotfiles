@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-ln "$HOME/config/.bashrc" "$HOME/.bash_aliases"
+ln -s "$HOME/config/.bashrc" "$HOME/.bash_aliases"
 
 sudo apt install i3 -y
-ln "$HOME/config/i3" "$HOME"
+ln -s "$HOME/config/i3" "$HOME/.config"
 
 sudo apt install xournalpp -y
 
