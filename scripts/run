@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+files=$(find . -maxdepth 1 -type f -name "main.c")
+if test -z "${files[0]}"; then
+    files=($(find . -maxdepth 1 -type f -name "*.c"))
+    file="${files[0]}"
+    parts=(${file//./ })
+    gcc -o ".${parts[0]}" "$file"
+    ."${parts[0]}"
+    echo ""
+else
+    gcc -o ./main ./main.c
+    ./main
+    echo ""
+fi
