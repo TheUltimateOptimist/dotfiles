@@ -1,9 +1,19 @@
 #!/usr/bin/env bash
 
+# link config's .bashrc
 ln -s "$HOME/config/.bashrc" "$HOME/.bash_aliases"
 
+# i3wm setup
 sudo apt install i3 -y
 ln -s "$HOME/config/i3" "$HOME/.config"
+wget -O "$HOME/config/lofi.mp3" http://167.235.22.8001/lofi
 
+# xournalpp setup
 sudo apt install xournalpp -y
 
+# install chrome
+# install the .deb package from the internet
+# run: sudo dpkg -i Downloads/<filename> 
+
+# vs code installation
+sudo snap install code --classic
