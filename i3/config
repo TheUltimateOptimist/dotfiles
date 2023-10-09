@@ -122,24 +122,24 @@ set $ws13 "7"
 set $ws14 "8"
 set $ws15 "9"
 set $ws16 "0"
-
+ 
 # switch to workspace
-bindsym $mod+u workspace $ws1
-bindsym $mod+i workspace $ws2
-bindsym $mod+o workspace $ws3
-bindsym $mod+p workspace $ws4
-bindsym $mod+m workspace $ws5
-bindsym $mod+n workspace $ws6
-bindsym $mod+1 workspace number $ws7
-bindsym $mod+2 workspace number $ws8
-bindsym $mod+3 workspace number $ws9
-bindsym $mod+4 workspace number $ws10
-bindsym $mod+5 workspace number $ws11
-bindsym $mod+6 workspace number $ws12
-bindsym $mod+7 workspace number $ws13
-bindsym $mod+8 workspace number $ws14
-bindsym $mod+9 workspace number $ws15
-bindsym $mod+0 workspace number $ws16
+bindsym $mod+u exec bash "$HOME/config/scripts/open" $ws1
+bindsym $mod+i exec bash "$HOME/config/scripts/open" $ws2
+bindsym $mod+o exec bash "$HOME/config/scripts/open" $ws3 --browser
+bindsym $mod+p exec bash "$HOME/config/scripts/open" $ws4 --browser chat.openai.com
+bindsym $mod+m exec bash "$HOME/config/scripts/open" $ws5 --browser github.com
+bindsym $mod+n exec bash "$HOME/config/scripts/open" $ws6
+bindsym $mod+1 exec bash "$HOME/config/scripts/open" $ws7
+bindsym $mod+2 exec bash "$HOME/config/scripts/open" $ws8
+bindsym $mod+3 exec bash "$HOME/config/scripts/open" $ws9
+bindsym $mod+4 exec bash "$HOME/config/scripts/open" $ws10
+bindsym $mod+5 exec bash "$HOME/config/scripts/open" $ws11
+bindsym $mod+6 exec bash "$HOME/config/scripts/open" $ws12
+bindsym $mod+7 exec bash "$HOME/config/scripts/open" $ws13
+bindsym $mod+8 exec bash "$HOME/config/scripts/open" $ws14
+bindsym $mod+9 exec bash "$HOME/config/scripts/open" $ws15
+bindsym $mod+0 exec bash "$HOME/config/scripts/open" $ws16
 
 # move focused container to workspace
 bindsym $mod+Shift+u move container to workspace $ws1
