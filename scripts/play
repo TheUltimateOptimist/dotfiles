@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+values=$(i3-msg -t get_workspaces)
+if [[ "$values" == *"\"0\""* ]]; then
+    rhythmbox-client --play ~/config/lofi.mp3
+else
+    i3 exec "rhythmbox-client --play ~/config/lofi.mp3" && sleep 0.3 && i3-msg "move container to workspace 0" 
+fi

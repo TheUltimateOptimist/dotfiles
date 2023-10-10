@@ -199,6 +199,6 @@ bar {
         status_command i3status
 }
 
-bindsym $mod+z exec "rhythmbox-client --play ~/config/lofi.mp3"
+bindsym $mod+z exec bash "$HOME/config/scripts/play"
 
 bindsym $mod+x exec "rhythmbox-client --pause"
