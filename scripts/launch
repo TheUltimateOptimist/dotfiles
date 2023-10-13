@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+
+current=$(i3-msg -t get_workspaces | jq '.[] | select(.focused == true) | .name')
+terminal=""
+if [ $current == '"code0"' ]; then
+    terminal="terminal0"
+elif [ $current == '"code1"' ]; then
+    terminal="terminal1"
+elif [ $current == '"code2"' ]; then
+    terminal="terminal2"
+fi
+if test -n "$terminal"; then
+    destination=($(echo -e "$(find ~/softwaredev -maxdepth 1 -mindepth 1 -type d)\n$(gh repo list)\nnew" | fzf))
+    if [[ $destination == "TheUltimateOptimist"* ]]; then
+        parts=(${destination//// })
+        name="${parts[1]}"
+        if test -d "$HOME/softwaredev/$name"; then
+            echo "name $name exists. Different name:"
+            read name
+        fi
+        gh repo clone "$destination" "$HOME/softwaredev/$name"
+        cd "$HOME/softwaredev/$name"
+        i3 workspace "$terminal"
+        i3-sensible-terminal &
+        sleep 0.2
+        i3 workspace $current
+        code . --new-window &
+        sleep 0.3
+        exit
+    elif [[ $destination == "new" ]]; then
+        echo "name:"
+        read name
+        cd "$HOME/softwaredev"
+        mkdir "$name"
+        cd "$name"
+        i3 workspace "$terminal"
+        i3-sensible-terminal &
+        sleep 0.2
+        i3 workspace $current
+        code . --new-window &
+        sleep 0.3
+        exit
+    else
+        cd "$destination"
+        i3 workspace "$terminal"
+        i3-sensible-terminal &
+        sleep 0.2
+        i3 workspace $current
+        code . --new-window &
+        sleep 0.3
+        exit  
+    fi
+fi

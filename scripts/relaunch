@@ -1,0 +1,20 @@
+#!/usr/env/bin bash
+
+current=$(i3-msg -t get_workspaces | jq '.[] | select(.focused == true) | .name')
+terminal=""
+if [ $current == '"code0"' ]; then
+    terminal="terminal0"
+elif [ $current == '"code1"' ]; then
+    terminal="terminal1"
+elif [ $current == '"code2"' ]; then
+    terminal="terminal2"
+fi
+if test -n "$terminal"; then
+    i3 workspace "$terminal"
+    i3 focus parent
+    i3 kill
+    i3 workspace $current
+    i3 focus parent
+    i3 kill
+    i3-sensible-terminal
+fi
