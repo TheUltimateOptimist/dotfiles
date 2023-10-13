@@ -33,6 +33,7 @@ if test -n "$terminal"; then
         cd "$HOME/softwaredev"
         mkdir "$name"
         cd "$name"
+        touch "README.md"
         i3 workspace "$terminal"
         i3-sensible-terminal &
         sleep 0.2
