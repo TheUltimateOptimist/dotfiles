@@ -10,7 +10,7 @@ elif [ $current == '"code2"' ]; then
     terminal="terminal2"
 fi
 if test -n "$terminal"; then
-    destination=($(echo -e "$(find ~/softwaredev -maxdepth 1 -mindepth 1 -type d)\n$(gh repo list)\nnew" | fzf))
+    destination=($(echo -e "$(find ~/softwaredev -maxdepth 1 -mindepth 1 -type d)\n$(gh repo list)\nnew\n$HOME/config" | fzf))
     if [[ $destination == "TheUltimateOptimist"* ]]; then
         parts=(${destination//// })
         name="${parts[1]}"
