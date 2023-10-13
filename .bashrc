@@ -12,4 +12,7 @@ alias co="bash $HOME/config/scripts/code"
 alias r="bash $HOME/config/scripts/run"
 alias xp="bash $HOME/config/scripts/xournalpp"
 alias gitit="bash $HOME/config/scripts/gitit"
-source ~/config/scripts/launch
+
+alias tools='python3 ~/softwaredev/tools/command_line_application/tools.py'
+
+source "$HOME/config/scripts/launch"
