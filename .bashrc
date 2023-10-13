@@ -11,4 +11,5 @@ alias sm='i3-msg "exec google-chrome github.com --new-window" && exit'
 alias co="bash $HOME/config/scripts/code"
 alias r="bash $HOME/config/scripts/run"
 alias xp="bash $HOME/config/scripts/xournalpp"
+alias gitit="bash $HOME/config/scripts/gitit"
 source ~/config/scripts/launch
