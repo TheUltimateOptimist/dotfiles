@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+source "$HOME/softwaredev/tools/venv/bin/activate"
+python3 ~/softwaredev/tools/command_line_application/tools.py "$@"
+deactivate

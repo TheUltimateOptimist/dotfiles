@@ -40,4 +40,12 @@ curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo 
 gh auth login
 
 # setup personal tools
-git repo clone tools "$HOME/softwaredev/tools"
+gh repo clone tools "$HOME/softwaredev/tools"
+sudo apt install python3.10-venv -y
+sudo apt install python3-pip -y k
+python3 -m venv "$HOME/softwaredev/tools/venv"
+source "$HOME/softwaredev/tools/venv/bin/activate"
+pip install typer
+pip install rich
+pip install requests
+deactivate
