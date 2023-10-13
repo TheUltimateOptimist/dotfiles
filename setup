@@ -11,6 +11,9 @@ wget -O "$HOME/config/lofi.mp3" http://167.235.22.8001/lofi
 # install fzf
 sudo apt install fzf -y
 
+# install jq for handling json
+sudo apt install jq -y
+
 # xournalpp setup
 sudo apt install xournalpp -y
 
