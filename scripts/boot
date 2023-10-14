@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+setxkbmap us
+line=($(xrandr | grep " connected "))
+i3 workspace '"preview"' output "${line[0]}"
+i3 exec i3-sensible-terminal

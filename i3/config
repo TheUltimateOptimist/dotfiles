@@ -32,9 +32,8 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 # and nm-applet is a desktop environment-independent system tray GUI for it.
 exec --no-startup-id nm-applet
 
-workspace preview output HDMI-1
-exec --no-startup-id i3-sensible-terminal
-exec setxkbmap us
+# execute startup script
+exec bash "$HOME/config/scripts/boot"
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
