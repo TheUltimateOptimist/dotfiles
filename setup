@@ -39,6 +39,9 @@ curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo 
 # preferebly via ssh
 gh auth login
 
+# install global pip packages
+sudo pip install jonascript
+
 # setup personal tools
 gh repo clone Aussagenlogik "$HOME/softwaredev/Aussagenlogik"
 gh repo clone tools "$HOME/softwaredev/tools"
