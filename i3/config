@@ -109,70 +109,65 @@ bindsym $mod+a focus parent
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
-set $ws1 "code0"
-set $ws2 "terminal0"
-set $ws3 "browser"
-set $ws4 "chatgpt"
-set $ws5 "github"
-set $ws6 "home"
-set $ws7 "1"
-set $ws8 "2"
-set $ws9 "3"
-set $ws10 "4"
-set $ws11 "5"
-set $ws12 "6"
-set $ws13 "7"
-set $ws14 "8"
-set $ws15 "9"
-set $ws16 "0"
-set $ws17 "code1"
-set $ws18 "terminal1"
-set $ws19 "code2"
-set $ws20 "terminal2"
+set $ws1 "home"
+set $ws2 "code0"
+set $ws3 "code1"
+set $ws4 "code2"
+set $ws5 "browser"
+set $ws6 "chatgpt"
+set $ws7 "github"
+set $ws8 "preview"
+set $ws9 "1"
+set $ws10 "2"
+set $ws11 "3"
+set $ws12 "4"
+set $ws13 "5"
+set $ws14 "6"
+set $ws15 "7"
+set $ws16 "8"
+set $ws17 "9"
+set $ws18 "0"
+
  
 # switch to workspace
-bindsym $mod+u exec bash "$HOME/config/scripts/open" $ws1
-bindsym $mod+i exec bash "$HOME/config/scripts/open" $ws2
-bindsym $mod+o exec bash "$HOME/config/scripts/open" $ws3 --browser
-bindsym $mod+p exec bash "$HOME/config/scripts/open" $ws4 --browser chat.openai.com
-bindsym $mod+m exec bash "$HOME/config/scripts/open" $ws5 --browser github.com
-bindsym $mod+n exec bash "$HOME/config/scripts/open" $ws6
-bindsym $mod+1 exec bash "$HOME/config/scripts/open" $ws7
-bindsym $mod+2 exec bash "$HOME/config/scripts/open" $ws8
-bindsym $mod+3 exec bash "$HOME/config/scripts/open" $ws9
-bindsym $mod+4 exec bash "$HOME/config/scripts/open" $ws10
-bindsym $mod+5 exec bash "$HOME/config/scripts/open" $ws11
-bindsym $mod+6 exec bash "$HOME/config/scripts/open" $ws12
-bindsym $mod+7 exec bash "$HOME/config/scripts/open" $ws13
-bindsym $mod+8 exec bash "$HOME/config/scripts/open" $ws14
-bindsym $mod+9 exec bash "$HOME/config/scripts/open" $ws15
-bindsym $mod+0 exec bash "$HOME/config/scripts/open" $ws16
-bindsym $mod+t exec bash "$HOME/config/scripts/open" $ws17
-bindsym $mod+y exec bash "$HOME/config/scripts/open" $ws18
-bindsym $mod+g exec bash "$HOME/config/scripts/open" $ws19
-bindsym $mod+semicolon exec bash "$HOME/config/scripts/open" $ws20
+bindsym $mod+n exec bash "$HOME/config/scripts/open" $ws1
+bindsym $mod+u exec bash "$HOME/config/scripts/open" $ws2
+bindsym $mod+i exec bash "$HOME/config/scripts/open" $ws3
+bindsym $mod+g exec bash "$HOME/config/scripts/open" $ws4
+bindsym $mod+o exec bash "$HOME/config/scripts/open" $ws5 --browser
+bindsym $mod+p exec bash "$HOME/config/scripts/open" $ws6 --browser chat.openai.com
+bindsym $mod+m exec bash "$HOME/config/scripts/open" $ws7 --browser github.com
+bindsym $mod+semicolon exec bash "$HOME/config/scripts/open" $ws8
+bindsym $mod+1 exec bash "$HOME/config/scripts/open" $ws9
+bindsym $mod+2 exec bash "$HOME/config/scripts/open" $ws10
+bindsym $mod+3 exec bash "$HOME/config/scripts/open" $ws11
+bindsym $mod+4 exec bash "$HOME/config/scripts/open" $ws12
+bindsym $mod+5 exec bash "$HOME/config/scripts/open" $ws13
+bindsym $mod+6 exec bash "$HOME/config/scripts/open" $ws14
+bindsym $mod+7 exec bash "$HOME/config/scripts/open" $ws15
+bindsym $mod+8 exec bash "$HOME/config/scripts/open" $ws16
+bindsym $mod+9 exec bash "$HOME/config/scripts/open" $ws17
+bindsym $mod+0 exec bash "$HOME/config/scripts/open" $ws18
 
 # move focused container to workspace
-bindsym $mod+Shift+u move container to workspace $ws1
-bindsym $mod+Shift+i move container to workspace $ws2
-bindsym $mod+Shift+o move container to workspace $ws3
-bindsym $mod+Shift+p move container to workspace $ws4
-bindsym $mod+Shift+m move container to workspace $ws5
-bindsym $mod+Shift+n move container to workspace $ws6
-bindsym $mod+Shift+1 move container to workspace number $ws7
-bindsym $mod+Shift+2 move container to workspace number $ws8
-bindsym $mod+Shift+3 move container to workspace number $ws9
-bindsym $mod+Shift+4 move container to workspace number $ws10
-bindsym $mod+Shift+5 move container to workspace number $ws11
-bindsym $mod+Shift+6 move container to workspace number $ws12
-bindsym $mod+Shift+7 move container to workspace number $ws13
-bindsym $mod+Shift+8 move container to workspace number $ws14
-bindsym $mod+Shift+9 move container to workspace number $ws15
-bindsym $mod+Shift+0 move container to workspace number $ws16
-bindsym $mod+Shift+t move container to workspace number $ws17
-bindsym $mod+Shift+y move container to workspace number $ws18
-bindsym $mod+Shift+g move container to workspace number $ws19
-bindsym $mod+Shift+semicolon move container to workspace number $ws20
+bindsym $mod+Shift+n move container to workspace $ws1
+bindsym $mod+Shift+u move container to workspace $ws2
+bindsym $mod+Shift+i move container to workspace $ws3
+bindsym $mod+Shift+g move container to workspace $ws4
+bindsym $mod+Shift+o move container to workspace $ws5
+bindsym $mod+Shift+p move container to workspace $ws6
+bindsym $mod+Shift+m move container to workspace $ws7
+bindsym $mod+Shift+semicolon move container to workspace $ws8
+bindsym $mod+Shift+1 move container to workspace number $ws9
+bindsym $mod+Shift+2 move container to workspace number $ws10
+bindsym $mod+Shift+3 move container to workspace number $ws11
+bindsym $mod+Shift+4 move container to workspace number $ws12
+bindsym $mod+Shift+5 move container to workspace number $ws13
+bindsym $mod+Shift+6 move container to workspace number $ws14
+bindsym $mod+Shift+7 move container to workspace number $ws15
+bindsym $mod+Shift+8 move container to workspace number $ws16
+bindsym $mod+Shift+9 move container to workspace number $ws17
+bindsym $mod+Shift+0 move container to workspace number $ws18
 
 # reload the configuration file
 bindsym $mod+Shift+c reload

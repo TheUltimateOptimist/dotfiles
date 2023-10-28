@@ -20,13 +20,9 @@ if test -n "$terminal"; then
         fi
         gh repo clone "$destination" "$HOME/softwaredev/$name"
         cd "$HOME/softwaredev/$name"
-        i3 workspace "$terminal"
-        i3-sensible-terminal &
-        sleep 0.2
-        i3 workspace $current
         code . --new-window &
-        sleep 0.4
-        exit
+        sleep 0.5
+        i3 fullscreen toggle
     elif [[ $destination == "new" ]]; then
         echo "name:"
         read name
@@ -34,21 +30,13 @@ if test -n "$terminal"; then
         mkdir "$name"
         cd "$name"
         touch "README.md"
-        i3 workspace "$terminal"
-        i3-sensible-terminal &
-        sleep 0.2
-        i3 workspace $current
         code . --new-window &
-        sleep 0.4
-        exit
+        sleep 0.5
+        i3 fullscreen toggle
     else
         cd "$destination"
-        i3 workspace "$terminal"
-        i3-sensible-terminal &
-        sleep 0.2
-        i3 workspace $current
         code . --new-window &
-        sleep 0.4
-        exit  
+        sleep 0.5
+        i3 fullscreen toggle
     fi
 fi
