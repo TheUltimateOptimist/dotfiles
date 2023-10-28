@@ -58,16 +58,16 @@ bindsym $mod+d exec --no-startup-id dmenu_run
 # bindcode $mod+40 exec --no-startup-id i3-dmenu-desktop
 
 # change focus
-bindsym $mod+j focus down
-bindsym $mod+h focus left
-bindsym $mod+l focus right
-bindsym $mod+k focus up
+bindsym $mod+j exec "$HOME/config/scripts/switch down"
+bindsym $mod+h exec "$HOME/config/scripts/switch left"
+bindsym $mod+l exec "$HOME/config/scripts/switch right"
+bindsym $mod+k exec "$HOME/config/scripts/switch up"
 
 # alternatively, you can use the cursor keys:
-bindsym $mod+Left focus left
-bindsym $mod+Down focus down
-bindsym $mod+Up focus up
-bindsym $mod+Right focus right
+bindsym $mod+Left exec "$HOME/config/scripts/switch left"
+bindsym $mod+Down exec "$HOME/config/scripts/switch down"
+bindsym $mod+Up exec "$HOME/config/scripts/switch up"
+bindsym $mod+Right exec "$HOME/config/scripts/switch right"
 
 # move focused window
 bindsym $mod+Shift+j move left
