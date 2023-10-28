@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 
 import sys
-from jonascript import cmd
+from jonascript import cmd, WINDOW
 
 direction: str = sys.argv[1]
-is_fullscreen = "_NET_WM_STATE_FULLSCREEN" in cmd("xprop -id $(xprop -root | awk '/_NET_ACTIVE_WINDOW\(WINDOW\)/{print $NF}') | grep '_NET_WM_STATE(ATOM)'").data
+is_fullscreen = "_NET_WM_STATE_FULLSCREEN" in cmd(f"xprop -id {WINDOW} | grep '_NET_WM_STATE(ATOM)'").data
 if is_fullscreen:
     cmd("i3 fullscreen toggle")
 cmd(f"i3 focus {direction}")
