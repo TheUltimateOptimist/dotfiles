@@ -213,3 +213,4 @@ bar {
 bindsym $mod+z exec bash "$HOME/config/scripts/play"
 
 bindsym $mod+x exec "rhythmbox-client --pause"
+bindsym $mod+y exec "systemctl suspend"
