@@ -1,0 +1,28 @@
+#!/usr/bin/env python3
+
+from jonascript import *
+
+import sys
+
+arguments = sys.argv[1:]
+
+if len(arguments) == 0 or arguments[0] == "open":
+    path = cmd(f"find {HOME}/scratchpad -maxdepth 1 -type f | fzf")
+    if path.returncode:
+        exit()
+    cmd(f"xp {path.data}")
+elif arguments[0] == "ls":
+    print(cmd(f"ls {HOME}/scratchpad").data)
+elif arguments[0] == "move":
+    destination = "."
+    if len(arguments) > 1:
+        destination = arguments[1]
+    path = cmd(f"find {HOME}/scratchpad -maxdepth 1 -type f | fzf")
+    if path.returncode:
+        exit()
+    cmd(f"mv {path.data} {destination}")
+elif arguments[0] == "new":
+    template = ""
+    if len(arguments) > 2:
+        template = arguments[2]
+    cmd(f"xp {HOME}/scratchpad/{arguments[1]}.xopp {template}")
