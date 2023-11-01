@@ -4,23 +4,25 @@ from jonascript import *
 
 import sys
 
-arguments = sys.argv[1:]
-
-if len(arguments) == 0 or arguments[0] == "open":
+def get_note_path() -> str:
     path = cmd(f"find {HOME}/scratchpad -maxdepth 1 -type f | fzf")
     if path.returncode:
         exit()
-    cmd(f"xp {path.data}")
+    return path.data
+
+arguments = sys.argv[1:]
+
+if len(arguments) == 0 or arguments[0] == "open":
+    cmd(f"xp {get_note_path()}")
 elif arguments[0] == "ls":
     print(cmd(f"ls {HOME}/scratchpad").data)
 elif arguments[0] == "move":
     destination = "."
     if len(arguments) > 1:
         destination = arguments[1]
-    path = cmd(f"find {HOME}/scratchpad -maxdepth 1 -type f | fzf")
-    if path.returncode:
-        exit()
-    cmd(f"mv {path.data} {destination}")
+    cmd(f"mv {get_note_path()} {destination}")
+elif arguments[0] == "rm":
+    cmd(f"rm {get_note_path()}")
 elif arguments[0] == "new":
     template = ""
     if len(arguments) > 2:
