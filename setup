@@ -53,6 +53,9 @@ source "$HOME/softwaredev/tools/venv/bin/activate"
 pip install typer
 pip install rich
 pip install requests
+pip install playsound
+sudo apt install libgirepository1.0-dev -y
+pip install pygobject
 deactivate
 source "$HOME/softwaredev/Aussagenlogik/venv/bin/activate"
 pip install rich
