@@ -9,7 +9,7 @@ if [ "$2" == "latest" ]; then
     latest=$(ls -t "$HOME/Downloads" | head -n 1)
     pdfpath="$HOME/Downloads/$latest"
 elif [[ "$2" == *".pdf" ]]; then
-    pdfpath="$(readlink -f $2)"
+    pdfpath="$(readlink -f "$2")"
 elif test -n "$2"; then
     template="$2"
 fi
@@ -17,9 +17,9 @@ if test -n "$3"; then
     template="$3"
 fi
 if test -n "$pdfpath"; then
-    numberOfPages=$(pdfinfo $pdfpath | grep 'Pages:' | awk '{print $2}')
-    page_width=$(pdfinfo $pdfpath | grep 'Page size:' | awk '{print $3}')
-    page_height=$(pdfinfo $pdfpath | grep 'Page size:' | awk '{print $5}')
+    numberOfPages=$(pdfinfo "$pdfpath" | grep 'Pages:' | awk '{print $2}')
+    page_width=$(pdfinfo "$pdfpath" | grep 'Page size:' | awk '{print $3}')
+    page_height=$(pdfinfo "$pdfpath" | grep 'Page size:' | awk '{print $5}')
 fi
 if test -e "$1" && test -z "$pdfpath"; then
     xournalpp "$1" &
