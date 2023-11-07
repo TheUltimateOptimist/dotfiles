@@ -6,14 +6,11 @@ numberOfPages=""
 page_width=""
 page_height=""
 if [ "$2" == "latest" ]; then
-    echo "one"
     latest=$(ls -t "$HOME/Downloads" | head -n 1)
     pdfpath="$HOME/Downloads/$latest"
 elif [[ "$2" == *".pdf" ]]; then
-    echo "two"
     pdfpath="$(readlink -f $2)"
 elif test -n "$2"; then
-    echo "three"
     template="$2"
 fi
 if test -n "$3"; then
@@ -25,7 +22,6 @@ if test -n "$pdfpath"; then
     page_height=$(pdfinfo $pdfpath | grep 'Page size:' | awk '{print $5}')
 fi
 if test -e "$1" && test -z "$pdfpath"; then
-    echo "some"
     xournalpp "$1" &
 else
     python3 "$HOME/config/scripts/create-xopp.py" "$1" "$pdfpath" "$template" "$numberOfPages" "$page_width" "$page_height"
