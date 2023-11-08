@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+filepath="$1"
 pdfpath=""
 template=""
 numberOfPages=""
@@ -17,15 +18,25 @@ if test -n "$3"; then
     template="$3"
 fi
 if test -n "$pdfpath"; then
+    mkdir "$filepath"
+    cd "$filepath"
+    filepath="annotations.xopp"
+    cp "$pdfpath" "background.pdf"
+    pdfpath="background.pdf"
     numberOfPages=$(pdfinfo "$pdfpath" | grep 'Pages:' | awk '{print $2}')
     page_width=$(pdfinfo "$pdfpath" | grep 'Page size:' | awk '{print $3}')
     page_height=$(pdfinfo "$pdfpath" | grep 'Page size:' | awk '{print $5}')
+    
 fi
-if test -e "$1" && test -z "$pdfpath"; then
-    xournalpp "$1" &
+if test -e "$filepath" && test -z "$pdfpath"; then
+    if test -d "$filepath"; then
+        xournalpp "$filepath/annotations.xopp"
+    else
+        xournalpp "$filepath" &
+    fi
 else
-    python3 "$HOME/config/scripts/create-xopp.py" "$1" "$pdfpath" "$template" "$numberOfPages" "$page_width" "$page_height"
-    xournalpp "$1" &
+    python3 "$HOME/config/scripts/create-xopp.py" "$filepath" "$pdfpath" "$template" "$numberOfPages" "$page_width" "$page_height"
+    xournalpp "$filepath" &
 fi
 sleep 0.5
 i3 fullscreen toggle
