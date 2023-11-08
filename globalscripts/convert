@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+newname="$1"
+if test -n "$2"; then
+    newname="$2"
+fi
+cp "$1" annotations.xopp.gz && gzip  -d annotations.xopp.gz &&
+mv "$1" old &&
+pdfpath="$(grep '/home/jonathan/' annotations.xopp | awk -F '"' '{ print $6}')" &&
+mkdir "$newname" &&
+sed 's/domain="absolute" filename="[^"]*"/domain="attach" filename="background.pdf"/g' annotations.xopp > "$newname/annotations.xopp" &&
+rm annotations.xopp &&
+cd "$newname" &&
+cp "$pdfpath" annotations.xopp.background.pdf
