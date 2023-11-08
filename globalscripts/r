@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 if test -n "$1"; then
-    gcc -o ./main ./main.c
-    ./main
+    parts=(${1//./ })
+    gcc -o "./.${parts[0]}" "$1" 
+    ./."${parts[0]}"
     exit 0
 fi
 files=$(find . -maxdepth 1 -type f -name "main.c")
@@ -9,9 +10,9 @@ if test -z "${files[0]}"; then
     files=($(ls -t | awk '/\.c$/ { print }'))
     file="${files[0]}"
     parts=(${file//./ })
-    gcc -o "./${parts[0]}" "$file"
-    ./"${parts[0]}"
+    gcc -o "./.${parts[0]}" "$file"
+    ./."${parts[0]}"
 else
-    gcc -o ./main ./main.c
-    ./main
+    gcc -o ./.main ./main.c
+    ./.main
 fi
