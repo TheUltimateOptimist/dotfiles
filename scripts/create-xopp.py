@@ -44,8 +44,8 @@ if pdf_path != "":
         page = tree.Element("page", attrib={"width": pdf_page_width, "height": pdf_page_height})
         background = tree.Element("background", attrib={"type": "pdf", "pageno": f"{i + 1}"})
         if i == 0:
-            background.set("domain", "absolute")
-            background.set("filename", pdf_path)
+            background.set("domain", "attach")
+            background.set("filename", "background.pdf")
         page.append(background)
         xournal.append(page)
 page = tree.Element("page", attrib={"width": template.width, "height": template.height})

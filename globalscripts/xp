@@ -21,12 +21,10 @@ if test -n "$pdfpath"; then
     mkdir "$filepath"
     cd "$filepath"
     filepath="annotations.xopp"
-    cp "$pdfpath" "background.pdf"
-    pdfpath="background.pdf"
+    cp "$pdfpath" "annotations.xopp.background.pdf"
     numberOfPages=$(pdfinfo "$pdfpath" | grep 'Pages:' | awk '{print $2}')
     page_width=$(pdfinfo "$pdfpath" | grep 'Page size:' | awk '{print $3}')
     page_height=$(pdfinfo "$pdfpath" | grep 'Page size:' | awk '{print $5}')
-    
 fi
 if test -e "$filepath" && test -z "$pdfpath"; then
     if test -d "$filepath"; then
