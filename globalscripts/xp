@@ -21,7 +21,7 @@ if test -n "$pdfpath"; then
     mkdir "$filepath"
     cd "$filepath"
     filepath="annotations.xopp"
-    cp "$pdfpath" "annotations.xopp.background.pdf"
+    cp "$pdfpath" "annotations.xopp.bg.pdf"
     numberOfPages=$(pdfinfo "$pdfpath" | grep 'Pages:' | awk '{print $2}')
     page_width=$(pdfinfo "$pdfpath" | grep 'Page size:' | awk '{print $3}')
     page_height=$(pdfinfo "$pdfpath" | grep 'Page size:' | awk '{print $5}')
