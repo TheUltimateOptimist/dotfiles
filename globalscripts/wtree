@@ -131,6 +131,21 @@ class Node:
         for node in self.nodes:
             node.print_oneline(index + 1, indent=indent)
 
+    def get_focused_id(self) -> int:
+        id = self.__get_focused_id()
+        if id is not None:
+            return id
+        else:
+            raise Exception("No focused id could be found from the starting node!")
+
+    def __get_focused_id(self) -> int | None:
+        if self.focused:
+            return self.id
+        for node in self.nodes:
+            id = node.__get_focused_id()
+            if id is not None:
+                return id
+
 def get_root() -> Node:
     json_string = cmd("i3-msg -t get_tree").data
     root_dict = json.loads(json_string)
@@ -144,5 +159,12 @@ app = typer.Typer()
 @app.command()
 def main() -> None:
     root.print_oneline()
+
+@app.command()
+def focused() -> None:
+    '''
+    prints the id of the focused window 
+    '''
+    print(root.get_focused_id())
 
 app()
