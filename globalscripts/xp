@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-filepath="$1"
+filepath="$(readlink -f $1)"
 pdfpath=""
 template=""
 numberOfPages=""
@@ -28,13 +28,13 @@ if test -n "$pdfpath"; then
 fi
 if test -e "$filepath" && test -z "$pdfpath"; then
     if test -d "$filepath"; then
-        xournalpp "$filepath/annotations.xopp"
+        i3-msg "exec xournalpp '$filepath/annotations.xopp'"
     else
-        xournalpp "$filepath" &
+        i3-msg "exec xournalpp '$filepath'"
     fi
 else
     python3 "$HOME/config/scripts/create-xopp.py" "$filepath" "$pdfpath" "$template" "$numberOfPages" "$page_width" "$page_height"
-    xournalpp "$filepath" &
+    i3-msg "exec xournalpp '$filepath'"
 fi
-sleep 0.5
+sleep 0.3
 i3 fullscreen toggle
