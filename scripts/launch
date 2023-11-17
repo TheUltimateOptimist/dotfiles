@@ -21,7 +21,7 @@ if test -n "$terminal"; then
         gh repo clone "$destination" "$HOME/softwaredev/$name"
         cd "$HOME/softwaredev/$name"
         code . --new-window &
-        sleep 0.5
+        wffs
         i3 fullscreen toggle
     elif [[ $destination == "new" ]]; then
         echo "name:"
@@ -31,12 +31,12 @@ if test -n "$terminal"; then
         cd "$name"
         touch "README.md"
         code . --new-window &
-        sleep 0.5
+        wffs
         i3 fullscreen toggle
     else
         cd "$destination"
         code . --new-window &
-        sleep 0.5
+        wffs
         i3 fullscreen toggle
     fi
 fi

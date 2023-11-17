@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-code -n "$1" && sleep 0.4 && i3 fullscreen toggle
+code -n "$1" && wffs && i3 fullscreen toggle

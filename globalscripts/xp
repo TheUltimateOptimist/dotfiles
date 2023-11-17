@@ -36,5 +36,4 @@ else
     python3 "$HOME/config/scripts/create-xopp.py" "$filepath" "$pdfpath" "$template" "$numberOfPages" "$page_width" "$page_height"
     i3-msg "exec xournalpp '$filepath'"
 fi
-sleep 0.3
-i3 fullscreen toggle
+wffs && i3 fullscreen toggle
