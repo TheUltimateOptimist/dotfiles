@@ -167,4 +167,17 @@ def focused() -> None:
     '''
     print(root.get_focused_id())
 
+@app.command()
+def wait_for_focus_switch() -> None:
+    input = sys.stdin.read().strip() if not sys.stdin.isatty() else ""
+    import time
+    firstId = root.get_focused_id()
+    while True:
+        time.sleep(0.1)
+        new_root = get_root()
+        if new_root.get_focused_id() != firstId:
+            break
+    if input != "":
+        print(input)
+
 app()
