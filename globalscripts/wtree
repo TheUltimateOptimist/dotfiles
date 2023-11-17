@@ -1,0 +1,148 @@
+#!/usr/bin/env python3
+
+from jonascript import cmd
+from dataclasses import dataclass
+import sys
+import json
+from typing import Any, Callable, TypeVar
+
+T = TypeVar("T")
+
+@dataclass(frozen=True)
+class Rectangle:
+    x: int
+    y: int
+    width: int
+    height: int
+
+    @classmethod
+    def from_dict(cls, input: dict) -> 'Rectangle':
+        return Rectangle(
+            input["x"],
+            input["y"],
+            input["width"],
+            input["height"]
+        )
+
+@dataclass(frozen=True)
+class WinProps:
+    klasse: str
+    '''
+    actually named 'class' in json
+    '''
+    title: str
+    instance: str
+    window_role: str | None
+    machine: str | None
+    transient_for: Any #do not know the type
+    @classmethod
+    def from_dict(cls, input: dict | None) -> 'WinProps | None':
+        if input is None:
+            return None
+        return WinProps(
+            input["class"],
+            input["title"],
+            input["instance"],
+            input.get("window_role"),
+            input.get("machine"),
+            input["transient_for"]
+        )
+
+@dataclass(frozen=True)
+class Swallowable:
+    dock: int
+    insert_where: int
+
+    @classmethod
+    def from_dict(cls, input: dict) -> 'Swallowable':
+        return Swallowable(
+            input["dock"],
+            input["insert_where"]
+        )
+
+def from_list(from_dict: Callable[[dict], T], input: list[dict]) -> list[T]:
+    return list(map(from_dict, input))
+
+@dataclass(frozen=True)
+class Node:
+    # left out: marks, floating_nodes
+    nodes: list['Node']
+    id: int
+    name: str
+    type: str
+    orientation: str
+    focused: bool
+    fullscreen_mode: int
+    percent: float | None
+    scratchpad_state: str
+    urgent: bool
+    layout: str
+    workspace_layout: str
+    last_split_layout: str
+    border: str
+    current_border_width: int
+    rect: Rectangle
+    deco_rect: Rectangle
+    window_rect: Rectangle
+    geometry: Rectangle
+    window_icon_padding: int
+    window: int | None
+    window_type: str | None
+    window_properties: WinProps | None
+    focus: list[int]
+    sticky: bool
+    floating: str
+    swallows: list[Swallowable]
+
+    @classmethod
+    def from_dict(cls, input: dict) -> 'Node':
+        return Node(
+            from_list(Node.from_dict, input["nodes"]),
+            input["id"],
+            input["name"],
+            input["type"],
+            input["orientation"],
+            input["focused"],
+            input["fullscreen_mode"],
+            input["percent"],
+            input["scratchpad_state"],
+            input["urgent"],
+            input["layout"],
+            input["workspace_layout"],
+            input["last_split_layout"],
+            input["border"],
+            input["current_border_width"],
+            Rectangle.from_dict(input["rect"]),
+            Rectangle.from_dict(input["deco_rect"]),
+            Rectangle.from_dict(input["window_rect"]),
+            Rectangle.from_dict(input["geometry"]),
+            input["window_icon_padding"],
+            input["window"],
+            input["window_type"],
+            WinProps.from_dict(input.get("window_properties")),
+            input["focus"],
+            input["sticky"],
+            input["floating"],
+            from_list(Swallowable.from_dict, input["swallows"])
+        )
+
+    def print_oneline(self, index: int = 0, indent: int = 4) -> None:
+        print(f"{index*indent * ' '}name: {self.name}, type: {self.type}, focused: {self.focused}")
+        for node in self.nodes:
+            node.print_oneline(index + 1, indent=indent)
+
+def get_root() -> Node:
+    json_string = cmd("i3-msg -t get_tree").data
+    root_dict = json.loads(json_string)
+    return Node.from_dict(root_dict)
+
+root = get_root() 
+
+import typer
+app = typer.Typer()
+
+@app.command()
+def main() -> None:
+    root.print_oneline()
+
+app()
