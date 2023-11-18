@@ -1,5 +1,15 @@
 #!/usr/bin/env bash
 
+open_path() {
+    # $1 is the file or folder path
+    if test -d "$1"; then
+        i3-msg "exec xournalpp '$1/annotations.xopp'"
+    else
+        i3-msg "exec xournalpp '$1'"
+    fi    
+    wffs && i3 fullscreen toggle
+}
+
 filepath="$(readlink -f $1)"
 pdfpath=""
 template=""
@@ -20,20 +30,15 @@ fi
 if test -n "$pdfpath"; then
     mkdir "$filepath"
     cd "$filepath"
-    filepath="annotations.xopp"
+    filepath="$filepath/annotations.xopp"
     cp "$pdfpath" "annotations.xopp.bg.pdf"
     numberOfPages=$(pdfinfo "$pdfpath" | grep 'Pages:' | awk '{print $2}')
     page_width=$(pdfinfo "$pdfpath" | grep 'Page size:' | awk '{print $3}')
     page_height=$(pdfinfo "$pdfpath" | grep 'Page size:' | awk '{print $5}')
 fi
 if test -e "$filepath" && test -z "$pdfpath"; then
-    if test -d "$filepath"; then
-        i3-msg "exec xournalpp '$filepath/annotations.xopp'"
-    else
-        i3-msg "exec xournalpp '$filepath'"
-    fi
+    open_path "$filepath"
 else
     python3 "$HOME/config/scripts/create-xopp.py" "$filepath" "$pdfpath" "$template" "$numberOfPages" "$page_width" "$page_height"
-    i3-msg "exec xournalpp '$filepath'"
+    open_path "$filepath"
 fi
-wffs && i3 fullscreen toggle
