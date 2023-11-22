@@ -1,44 +1,99 @@
-#!/usr/bin/env bash
+#!/usr/bin/env python3
+from jonascript import scmd, HOME
+from dataclasses import dataclass
 
-open_path() {
-    # $1 is the file or folder path
-    if test -d "$1"; then
-        i3-msg "exec xournalpp '$1/annotations.xopp'"
-    else
-        i3-msg "exec xournalpp '$1'"
-    fi    
-    wffs && i3 fullscreen toggle
-}
+@dataclass
+class Template:
+    width: str
+    height: str
+    background_color: str
+    style: str
 
-filepath="$(readlink -f $1)"
-pdfpath=""
-template=""
-numberOfPages=""
-page_width=""
-page_height=""
-if [ "$2" == "latest" ]; then
-    latest=$(ls -t "$HOME/Downloads" | head -n 1)
-    pdfpath="$HOME/Downloads/$latest"
-elif [[ "$2" == *".pdf" ]]; then
-    pdfpath="$(readlink -f "$2")"
-elif test -n "$2"; then
-    template="$2"
-fi
-if test -n "$3"; then
-    template="$3"
-fi
-if test -n "$pdfpath"; then
-    mkdir "$filepath"
-    cd "$filepath"
-    filepath="$filepath/annotations.xopp"
-    cp "$pdfpath" "annotations.xopp.bg.pdf"
-    numberOfPages=$(pdfinfo "$pdfpath" | grep 'Pages:' | awk '{print $2}')
-    page_width=$(pdfinfo "$pdfpath" | grep 'Page size:' | awk '{print $3}')
-    page_height=$(pdfinfo "$pdfpath" | grep 'Page size:' | awk '{print $5}')
-fi
-if test -e "$filepath" && test -z "$pdfpath"; then
-    open_path "$filepath"
-else
-    python3 "$HOME/config/scripts/create-xopp.py" "$filepath" "$pdfpath" "$template" "$numberOfPages" "$page_width" "$page_height"
-    open_path "$filepath"
-fi
+a4 = Template(
+    width="595.27559100",
+    height="841.88976400",
+    background_color="#ffffffff",
+    style="graph"
+)
+
+canvas = Template(
+    width="5669.20000000",
+    height="5669.20000000",
+    background_color="#ffffffff",
+    style="graph"
+)
+
+templates = {"default": a4, "a4": a4, "canvas": canvas}
+
+import typer
+app = typer.Typer()
+
+@app.command()
+def main(path: str, pdf: str = "", temp: str = "default") -> None:
+    import os
+    path = scmd(f'readlink -f "{path}"')
+    if not os.path.exists(path):
+        if pdf == "latest":
+            pdf_name = scmd(f'ls -t "{HOME}/Downloads" | head -n 1') 
+            pdf = f"{HOME}/Downloads/{pdf_name}"
+        elif pdf != "":
+            pdf = scmd(f'readlink -f "{pdf}"') 
+            if not os.path.exists(pdf):
+                print(f"\033[91mEs existiert keine Pdf mit dem eingegebenem Pfad!\033[0m")
+                exit(1)
+        if pdf != "":
+            os.mkdir(path)
+            scmd(f'cp "{pdf}" "{path}/annotations.xopp.bg.pdf"')
+            path = f"{path}/annotations.xopp"
+        create_xopp_file(path, pdf, templates.get(temp))
+    if os.path.isdir(path):
+        scmd(f'i3-msg "exec xournalpp "{path}/annotations.xopp"" && wffs && i3 fullscreen toggle')
+    elif os.path.isfile(path):
+        scmd(f'i3-msg "exec xournalpp "{path}"" && wffs && i3 fullscreen toggle')
+    else:
+        raise Exception("Unreachable")
+
+def create_xopp_file(path: str, pdf_path: str, template: Template):
+    import xml.etree.ElementTree as tree
+
+    xournal = tree.Element("xournal", attrib={"creator": "Xournal++ 1.1.1", "fileversion": "4"})
+    title = tree.Element("title")
+    title.text = "Xournal++ document - see https://github.com/xournalpp/xournalpp"
+    xournal.append(title)
+    if pdf_path != "":
+        dimensions = get_pdf_dimensions(pdf_path)
+        for i, dimension in enumerate(dimensions):
+            page = tree.Element("page", attrib={"width": str(dimension[0]), "height": str(dimension[1])})
+            background = tree.Element("background", attrib={"type": "pdf", "pageno": f"{i + 1}"})
+            if i == 0:
+                background.set("domain", "attach")
+                background.set("filename", "bg.pdf")
+            page.append(background)
+            xournal.append(page)
+    page = tree.Element("page", attrib={"width": template.width, "height": template.height})
+    page.append(tree.Element("background", attrib={"type": "solid", "color": template.background_color, "style": template.style}))
+    xournal.append(page)
+
+    xournal_tree = tree.ElementTree(xournal)
+    xournal_tree.write(path, xml_declaration=True)
+
+def get_pdf_dimensions(pdf_path: str) -> tuple[float, float]:
+    import fitz
+    # Open the PDF file
+    pdf_document = fitz.open(pdf_path)
+
+    # Get the number of pages in the PDF
+    num_pages = pdf_document.page_count
+
+    dimensions: list[tuple[float, float]] = []
+
+    # Loop through each page and get its dimensions
+    for page_num in range(num_pages):
+        page = pdf_document[page_num]
+        dimensions.append((page.rect.width, page.rect.height))
+
+    # Close the PDF file
+    pdf_document.close()
+    return dimensions
+    
+app()
